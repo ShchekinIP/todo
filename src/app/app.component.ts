@@ -3,6 +3,7 @@ import {DataHandlerService} from "./service/data-handler.service";
 import {Task} from './model/Task';
 import {Category} from "./model/Category";
 import {Priority} from "./model/Priority";
+import {zip} from "rxjs";
 
 @Component({
     selector: 'app-root',
@@ -15,6 +16,11 @@ export class AppComponent implements OnInit {
     private tasks: Task[];
     private categories: Category[];
     private priorities: Priority[];
+
+    private totalTasksCountInCategory : number;
+    private completeCountInCategory : number;
+    private uncompletedCountInCategory : number;
+    private uncompletedTotalTasksCount : number;
 
 
     private selectedCategory: Category = null;
@@ -131,5 +137,24 @@ export class AppComponent implements OnInit {
 
     private updateCategories() {
         this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
+    }
+
+    private updateTasksAndStat(){
+        this.updateTasks();
+        this.updateStat();
+    }
+
+    private updateStat() {
+        zip(
+            this.dataHandler.getTotalCountInCategory(this.selectedCategory),
+            this.dataHandler.getCompletedCountInCategory(this.selectedCategory),
+            this.dataHandler.getUncompletedCountInCategory(this.selectedCategory),
+            this.dataHandler.getUncompletedTotalCount()
+        ).subscribe(array=>{
+            this.totalTasksCountInCategory = array[0];
+            this.completeCountInCategory = array[1];
+            this.uncompletedCountInCategory = array[2];
+            this.uncompletedTotalTasksCount = array[3]
+        });
     }
 }

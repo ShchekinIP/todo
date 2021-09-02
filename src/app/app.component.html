@@ -19,7 +19,13 @@
         <div class="content">
             <div class="container-fluid">
 
-                <app-stat></app-stat>
+                <app-stat
+                        [totalTasksInCategory] = "totalTasksInCategory"
+                        [completeTasksInCategory] = "completeTasksInCategory"
+                        [uncompleteTasksInCategory] = "uncompleteTasksInCategory">
+
+
+                </app-stat>
 
 
                 <div class="row">

@@ -26,6 +26,7 @@ import {EditCategoryDialogComponent} from './dialog/edit-category-dialog/edit-ca
 import { FooterComponent } from './views/footer/footer.component';
 import { HeaderComponent } from './views/header/header.component';
 import { StatComponent } from './views/stat/stat.component';
+import { StatCardComponent } from './views/stat/stat-card/stat-card.component';
 
 registerLocaleData(localeRu);
 
@@ -40,7 +41,8 @@ registerLocaleData(localeRu);
         EditCategoryDialogComponent,
         FooterComponent,
         HeaderComponent,
-        StatComponent
+        StatComponent,
+        StatCardComponent
     ],
     imports: [
         BrowserModule,
