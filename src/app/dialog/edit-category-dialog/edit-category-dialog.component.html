@@ -47,23 +47,18 @@
 
         <button (click)="onCancel()" mat-raised-button>Отмена</button>
 
-    </div>
-
-
-    <div class="col-12 text-center">
-
-
         <button
                 *ngIf="canDelete()"
                 (click)="delete()"
-                class="red" mat-button>
+                class="red" mat-raised-button>
 
             Удалить
 
         </button>
 
-
     </div>
+
+
 
 
 </mat-dialog-actions>
