@@ -16,7 +16,7 @@
                 class='col-lg-3 col-md-6 col-sm-6'
                 title="Незавершенные задачи"
                 iconName="thumb_down_alt"
-                [count1]="uncompleteTasksInCategory"
+                [count1]="uncompletedTasksInCategory"
                 [countTotal]="totalTasksInCategory"
         >
         </app-stat-card>
@@ -37,7 +37,7 @@
                 class='col-lg-3 col-md-6 col-sm-6'
                 title="Процент незавершенных задач"
                 iconName="thumb_down_alt"
-                [count1]="uncompleteTasksInCategory ? (uncompleteTasksInCategory/totalTasksInCategory | percent) : '0 %'">
+                [count1]="uncompletedTasksInCategory ? (uncompletedTasksInCategory/totalTasksInCategory | percent) : '0 %'">
         </app-stat-card>
 
 

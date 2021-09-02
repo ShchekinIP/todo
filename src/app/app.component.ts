@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     private priorities: Priority[];
 
     private totalTasksCountInCategory : number;
-    private completeCountInCategory : number;
+    private completedCountInCategory : number;
     private uncompletedCountInCategory : number;
     private uncompletedTotalTasksCount : number;
 
@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
 
         this.selectedCategory = category;
 
-        this.updateTasks();
+        this.updateTasksAndStat();
 
     }
 
@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
     private onUpdateTask(task: Task) {
 
         this.dataHandler.updateTask(task).subscribe(cat => {
-            this.updateTasks()
+            this.updateTasksAndStat()
         });
 
     }
@@ -84,7 +84,7 @@ export class AppComponent implements OnInit {
     private onDeleteTask(task: Task) {
 
         this.dataHandler.deleteTask(task.id).subscribe(cat => {
-            this.updateTasks()
+            this.updateTasksAndStat()
         });
     }
 
@@ -124,7 +124,7 @@ export class AppComponent implements OnInit {
 
         this.dataHandler.addTask(task).subscribe(result => {
 
-            this.updateTasks();
+            this.updateTasksAndStat()
 
         });
 
@@ -152,7 +152,7 @@ export class AppComponent implements OnInit {
             this.dataHandler.getUncompletedTotalCount()
         ).subscribe(array=>{
             this.totalTasksCountInCategory = array[0];
-            this.completeCountInCategory = array[1];
+            this.completedCountInCategory = array[1];
             this.uncompletedCountInCategory = array[2];
             this.uncompletedTotalTasksCount = array[3]
         });

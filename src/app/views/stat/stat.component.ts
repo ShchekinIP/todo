@@ -18,7 +18,7 @@ export class StatComponent implements OnInit {
   completeTasksInCategory: number;
 
   @Input()
-  uncompleteTasksInCategory: number;
+  uncompletedTasksInCategory: number;
 
 
   constructor() {}
