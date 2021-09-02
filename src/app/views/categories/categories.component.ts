@@ -19,62 +19,56 @@ export class CategoriesComponent implements OnInit {
     selectedCategory: Category;
 
 
-    // выбрали категорию из списка
     @Output()
     selectCategory = new EventEmitter<Category>();
 
-    // удалили категорию
+
     @Output()
     deleteCategory = new EventEmitter<Category>();
 
-    // изменили категорию
+
     @Output()
     updateCategory = new EventEmitter<Category>();
 
-    // добавили категорию
+
     @Output()
-    addCategory = new EventEmitter<string>(); // передаем только название новой категории
+    addCategory = new EventEmitter<string>();
 
 
-
-
-    // для отображения иконки редактирования при наведении на категорию
     private indexMouseMove: number;
 
     constructor(
         private dataHandler: DataHandlerService,
-        private dialog: MatDialog, // внедряем MatDialog, чтобы работать с диалоговыми окнами
-
-
+        private dialog: MatDialog,
     ) {
     }
 
-    // метод вызывается автоматически после инициализации компонента
+
     ngOnInit() {
-        // this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
+
     }
 
 
     private showTasksByCategory(category: Category): void {
 
-        // если не изменилось значение, ничего не делать (чтобы лишний раз не делать запрос данных)
+
         if (this.selectedCategory === category) {
             return;
         }
 
         this.selectedCategory = category; // сохраняем выбранную категорию
 
-        // вызываем внешний обработчик и передаем туда выбранную категорию
+
         this.selectCategory.emit(this.selectedCategory);
     }
 
-    // сохраняет индекс записи категории, над который в данный момент проходит мышка (и там отображается иконка редактирования)
+
     private showEditIcon(index: number) {
         this.indexMouseMove = index;
 
     }
 
-    // диалоговое окно для редактирования категории
+
     private openEditDialog(category: Category) {
         const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
             data: [category.title, 'Редактирование категории', OperType.EDIT],
@@ -99,10 +93,13 @@ export class CategoriesComponent implements OnInit {
         });
     }
 
-    // диалоговое окно для добавления категории
+
     private openAddDialog() {
 
-        const dialogRef = this.dialog.open(EditCategoryDialogComponent, {data: ['', 'Добавление категории', OperType.ADD], width: '400px'});
+        const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
+            data: ['', 'Добавление категории', OperType.ADD],
+            width: '400px'
+        });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {

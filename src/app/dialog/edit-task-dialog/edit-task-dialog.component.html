@@ -1,10 +1,8 @@
-<!--редактирование/создания задачи-->
 
 <mat-dialog-content>
     <p mat-dialog-title>{{dialogTitle}}</p>
 
 
-    <!--название задачи    -->
     <mat-form-field>
 
         <mat-label>Название (обязательно)</mat-label>
@@ -14,7 +12,7 @@
 
             [(ngModel)]="tmpTitle"
 
-            matInput> <!-- по нажатию на enter можем сразу сохранить задачу -->
+            matInput>
 
         <button
                 (click)="tmpTitle= ''"
@@ -29,7 +27,6 @@
     </mat-form-field>
 
 
-    <!--    выпадающий список категорий-->
     <mat-form-field>
         <mat-label>Укажите категорию</mat-label>
 
@@ -42,7 +39,6 @@
 
     </mat-form-field>
 
-    <!--    выпадающий список приоритетов-->
     <mat-form-field>
         <mat-label>Укажите приоритет</mat-label>
 
@@ -57,7 +53,6 @@
 
     </mat-form-field>
 
-    <!--    календарь - срок выполнения-->
     <mat-form-field>
 
         <input
@@ -70,11 +65,9 @@
             readonly="true">
 
         <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-        <!-- иконка календаря (для открытия календаря) -->
 
-        <mat-datepicker #picker></mat-datepicker> <!-- компонент календаря (открывается по нажатию)-->
+        <mat-datepicker #picker></mat-datepicker>
 
-        <!--кнопка очистки даты -->
         <button
                 (click)="tmpDate = null"
 
@@ -92,7 +85,6 @@
 </mat-dialog-content>
 
 
-<!--  кнопки возможных действий-->
 <mat-dialog-actions>
 
 
@@ -101,7 +93,7 @@
         <button
                 (click)="onConfirm()" [disabled]="inputTitle.value.trim().length==0"
                 color="primary"
-                mat-raised-button>  <!-- если пустой текст - кнопка "Сохранить" будет недоступна -->
+                mat-raised-button>
             Сохранить
         </button>
 
@@ -111,7 +103,7 @@
     </div>
 
 
-    <!--  возможные операции над задачей-->
+
     <div
             class="col-md-7 col-12 text-right"
 

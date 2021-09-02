@@ -17,7 +17,7 @@ export class CategoryDAOArray implements CategoryDAO {
 
     add(category: Category): Observable<Category> {
 
-        // если id пустой - генерируем его
+
         if (category.id === null || category.id === 0) {
             category.id = this.getLastIdCategory();
         }
@@ -27,15 +27,14 @@ export class CategoryDAOArray implements CategoryDAO {
         return of(category);
     }
 
-    // находит последний id (чтобы потом вставить новую запись с id, увеличенным на 1) - в реальной БД это происходит автоматически
+
     private getLastIdCategory(): number {
         return Math.max.apply(Math, TestData.categories.map(c => c.id)) + 1;
     }
 
     delete(id: number): Observable<Category> {
 
-        // перед удалением - нужно в задачах занулить все ссылки на удаленное значение
-        // в реальной БД сама обновляет все ссылки (cascade update) - здесь нам приходится делать это вручную (т.к. вместо БД - массив)
+
         TestData.tasks.forEach(task => {
             if (task.category && task.category.id === id) {
                 task.category = null;

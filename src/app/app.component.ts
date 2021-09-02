@@ -13,14 +13,14 @@ export class AppComponent implements OnInit {
 
     private title = 'Todo';
     private tasks: Task[];
-    private categories: Category[]; // все категории
-    private priorities: Priority[]; // все приоритеты
+    private categories: Category[];
+    private priorities: Priority[];
 
 
     private selectedCategory: Category = null;
 
     // поиск
-    private searchTaskText = ''; // текущее значение для поиска задач
+    private searchTaskText = '';
 
     // фильтрация
     private priorityFilter: Priority;
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
 
 
     constructor(
-        private dataHandler: DataHandlerService, // фасад для работы с данными
+        private dataHandler: DataHandlerService,
     ) {
     }
 
@@ -36,12 +36,12 @@ export class AppComponent implements OnInit {
         this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);
         this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
 
-        this.onSelectCategory(null); // показать все задачи
+        this.onSelectCategory(null);
 
     }
 
 
-    // изменение категории
+
     private onSelectCategory(category: Category) {
 
         this.selectedCategory = category;
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
 
     }
 
-    // удаление категории
+
     private onDeleteCategory(category: Category) {
         this.dataHandler.deleteCategory(category.id).subscribe(cat => {
             this.selectedCategory = null; // открываем категорию "Все"
@@ -58,14 +58,14 @@ export class AppComponent implements OnInit {
         });
     }
 
-    // обновлении категории
+
     private onUpdateCategory(category: Category) {
         this.dataHandler.updateCategory(category).subscribe(() => {
             this.onSelectCategory(this.selectedCategory);
         });
     }
 
-    // обновление задачи
+
     private onUpdateTask(task: Task) {
 
         this.dataHandler.updateTask(task).subscribe(cat => {
@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
 
     }
 
-    // удаление задачи
+
     private onDeleteTask(task: Task) {
 
         this.dataHandler.deleteTask(task.id).subscribe(cat => {
@@ -83,19 +83,19 @@ export class AppComponent implements OnInit {
     }
 
 
-    // поиск задач
+
     private onSearchTasks(searchString: string) {
         this.searchTaskText = searchString;
         this.updateTasks();
     }
 
-    // фильтрация задач по статусу (все, решенные, нерешенные)
+
     private onFilterTasksByStatus(status: boolean) {
         this.statusFilter = status;
         this.updateTasks();
     }
 
-    // фильтрация задач по приоритету
+
     private onFilterTasksByPriority(priority: Priority) {
         this.priorityFilter = priority;
         this.updateTasks();
@@ -113,7 +113,7 @@ export class AppComponent implements OnInit {
     }
 
 
-    // добавление задачи
+
     private onAddTask(task: Task) {
 
         this.dataHandler.addTask(task).subscribe(result => {
@@ -124,7 +124,7 @@ export class AppComponent implements OnInit {
 
     }
 
-    // добавление категории
+
     private onAddCategory(title: string) {
         this.dataHandler.addCategory(title).subscribe(() => this.updateCategories());
     }

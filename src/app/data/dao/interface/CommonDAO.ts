@@ -1,23 +1,23 @@
-// стандартные методы CRUD (create, read, udpate, delete)
+
 
 import {Observable} from 'rxjs';
 
-// все методы возвращают Observable - для асинхронности и работы в реактивном стиле
+
 export interface CommonDAO<T> {
 
-    // получить все значения
+
     getAll(): Observable<T[]>;
 
-    // получить одно значение по id
-    get(id: number): Observable<T>; // получение значения по уникальному id
 
-    // обновить значение
+    get(id: number): Observable<T>;
+
+
     update(T): Observable<T>;
 
     // удалить значение
-    delete(id: number): Observable<T>; // удаление по id
+    delete(id: number): Observable<T>;
 
-    // добавить значение
+
     add(T): Observable<T>;
 
 }

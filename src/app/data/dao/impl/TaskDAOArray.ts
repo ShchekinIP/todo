@@ -19,7 +19,7 @@ export class TaskDAOArray implements TaskDAO {
 
     add(task: Task): Observable<Task> {
 
-        // если id пустой - генерируем его
+
         if (task.id === null || task.id === 0) {
             task.id = this.getLastIdTask();
         }
@@ -28,7 +28,7 @@ export class TaskDAOArray implements TaskDAO {
         return of(task);
     }
 
-    // находит последний id (чтобы потом вставить новую запись с id, увеличенным на 1) - в реальной БД это происходит автоматически
+
     private getLastIdTask(): number {
         return Math.max.apply(Math, TestData.tasks.map(task => task.id)) + 1;
     }
@@ -58,8 +58,7 @@ export class TaskDAOArray implements TaskDAO {
         return undefined;
     }
 
-    // поиск задач по параметрам
-    // если значение null - параметр не нужно учитывать при поиске
+
     search(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
 
         return of(this.searchTasks(category, searchText, status, priority));

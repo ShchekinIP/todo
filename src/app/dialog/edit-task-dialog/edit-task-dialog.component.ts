@@ -13,7 +13,6 @@ import {OperType} from "../OperType";
   styleUrls: ['./edit-task-dialog.component.css']
 })
 
-// редактирование/создание задачи
 export class EditTaskDialogComponent implements OnInit {
 
   private tmpCategory: Category;
@@ -21,31 +20,31 @@ export class EditTaskDialogComponent implements OnInit {
   private categories: Category[];
   private priorities: Priority[];
 
-  private dialogTitle: string; // заголовок окна
-  private task: Task; // задача для редактирования/создания
+  private dialogTitle: string;
+  private task: Task;
   private operType: OperType;
 
-  // сохраняем все значения в отдельные переменные
-  // чтобы изменения не сказывались на самой задаче и можно было отменить изменения
+
+
   private tmpTitle: string;
   private tmpPriority: Priority;
   private tmpDate: Date;
 
   constructor(
-      private dialogRef: MatDialogRef<EditTaskDialogComponent>, // // для возможности работы с текущим диалог. окном
-      @Inject(MAT_DIALOG_DATA) private data: [Task, string, OperType], // данные, которые передали в диалоговое окно
-      private dataHandler: DataHandlerService, // ссылка на сервис для работы с данными
-      private dialog: MatDialog // для открытия нового диалогового окна (из текущего) - например для подтверждения удаления
+      private dialogRef: MatDialogRef<EditTaskDialogComponent>,
+      @Inject(MAT_DIALOG_DATA) private data: [Task, string, OperType],
+      private dataHandler: DataHandlerService,
+      private dialog: MatDialog
   ) {
   }
 
   ngOnInit() {
-    this.task = this.data[0]; // задача для редактирования/создания
-    this.dialogTitle = this.data[1]; // текст для диалогового окна
-    this.operType = this.data[2]; // тип операции
+    this.task = this.data[0];
+    this.dialogTitle = this.data[1];
+    this.operType = this.data[2];
 
-    // инициализация начальных значений (записывам в отдельные переменные
-    // чтобы можно было отменить изменения, а то будут сразу записываться в задачу)
+
+
     this.tmpTitle = this.task.title;
     this.tmpPriority = this.task.priority;
     this.tmpCategory = this.task.category;
@@ -58,28 +57,28 @@ export class EditTaskDialogComponent implements OnInit {
 
   }
 
-  // нажали ОК
+
   private onConfirm(): void {
 
-    // считываем все значения для сохранения в поля задачи
+
     this.task.title = this.tmpTitle;
     this.task.priority = this.tmpPriority;
     this.task.category = this.tmpCategory;
     this.task.date = this.tmpDate;
 
 
-    // передаем добавленную/измененную задачу в обработчик
-    // что с ним будут делать - уже на задача этого компонента
+
+
     this.dialogRef.close(this.task);
 
   }
 
-  // нажали отмену (ничего не сохраняем и закрываем окно)
+
   private onCancel(): void {
     this.dialogRef.close(null);
   }
 
-  // нажали Удалить
+
   private delete() {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -98,13 +97,13 @@ export class EditTaskDialogComponent implements OnInit {
     });
   }
 
-  // нажали Выполнить (завершить) задачу
+
   private complete() {
     this.dialogRef.close('complete');
 
   }
 
-  // делаем статус задачи "незавершенным" (активируем)
+
   private activate() {
     this.dialogRef.close('activate');
   }
