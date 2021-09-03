@@ -37,7 +37,7 @@ span.add-icon-area {
     text-align: left;
 }
 
-#categories{
+#categories {
     width: 100%;
     overflow-x: hidden;
 }
@@ -48,4 +48,20 @@ span.add-icon-area {
     font-size: 20px;
     text-align: center;
     vertical-align: middle
+}
+
+.search-category-area {
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #f2f2f2;
+    border-radius: 6px
+}
+
+.search-category-button {
+    margin-left: 10px;
+    font-size: 25px
+}
+
+.sidebar-wrapper .mat-form-field {
+    padding-bottom: 0px;
 }

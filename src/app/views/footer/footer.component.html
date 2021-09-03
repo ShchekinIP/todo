@@ -3,34 +3,26 @@
         <nav class="float-left">
             <ul>
                 <li>
-                    <a>
-                        Creative Tim
+                    <a [href]="site">
+                        Наш сайт
                     </a>
                 </li>
                 <li>
-                    <a>
-                        About Us
+                    <a (click)="openAboutDialog()" class="link">
+                        О приложении
                     </a>
                 </li>
                 <li>
-                    <a>
-                        Blog
+                    <a [href]="blog">
+                        Блог
                     </a>
                 </li>
-                <li>
-                    <a>
-                        Licenses
-                    </a>
-                </li>
+
             </ul>
         </nav>
-        <div class="copyright float-right">
-            &copy;
-            <script>
-                document.write(new Date().getFullYear())
-            </script>
-            , made with <i class="material-icons">favorite</i> by
-            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+        <div class="copyright float-right">* Тестовые данные обнуляются при обновлении страницы&nbsp;&nbsp;
+            © {{year | date: 'yyyy'}} <i class="material-icons">favorite</i>
+            <a [href]="site" target="_blank">{{siteName}}</a>
         </div>
     </div>
 </footer>

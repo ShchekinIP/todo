@@ -1,21 +1,21 @@
-import {TaskDAO} from "../interface/TaskDAO";
-import {Category} from "../../../model/Category";
-import {Observable, of} from "rxjs";
-import {Priority} from "../../../model/Priority";
-import {Task} from 'src/app/model/Task';
-import {TestData} from "../../TestData";
+import {TestData} from '../../TestData';
+import {TaskDAO} from '../interface/TaskDAO';
+import {Task} from '../../../model/Task';
+import {Category} from '../../../model/Category';
+import {Observable, of} from 'rxjs';
+import {Priority} from '../../../model/Priority';
+
 
 export class TaskDAOArray implements TaskDAO {
+    
+    get(id: number): Observable<Task> {
 
+        return of(TestData.tasks.find(task => task.id === id));
+    }
 
     getAll(): Observable<Task[]> {
         return of(TestData.tasks);
     }
-
-    get(id: number): Observable<Task> {
-        return undefined;
-    }
-
 
     add(task: Task): Observable<Task> {
 
@@ -28,11 +28,6 @@ export class TaskDAOArray implements TaskDAO {
         return of(task);
     }
 
-
-    private getLastIdTask(): number {
-        return Math.max.apply(Math, TestData.tasks.map(task => task.id)) + 1;
-    }
-
     delete(id: number): Observable<Task> {
 
         const taskTmp = TestData.tasks.find(t => t.id === id); // удаляем по id
@@ -42,22 +37,14 @@ export class TaskDAOArray implements TaskDAO {
 
     }
 
-    getCompletedCountInCategory(category: Category): Observable<number> {
-        return of(this.searchTasks(category, null, true, null).length);
-    }
+    update(task: Task): Observable<Task> {
 
-    getUncompletedCountInCategory(category: Category): Observable<number> {
-        return of(this.searchTasks(category, null, false, null).length);
-    }
+        const taskTmp = TestData.tasks.find(t => t.id === task.id); // обновляем по id
+        TestData.tasks.splice(TestData.tasks.indexOf(taskTmp), 1, task);
 
-    getTotalCountInCategory(category: Category): Observable<number> {
-        return of(this.searchTasks(category, null, null, null).length);
-    }
+        return of(task);
 
-    getTotalCount(): Observable<number> {
-        return of(TestData.tasks.length);
     }
-
 
 
     search(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
@@ -93,13 +80,32 @@ export class TaskDAOArray implements TaskDAO {
         return allTasks;
     }
 
-    update(task: Task): Observable<Task> {
 
-        const taskTmp = TestData.tasks.find(t => t.id === task.id); // обновляем по id
-        TestData.tasks.splice(TestData.tasks.indexOf(taskTmp), 1, task);
 
-        return of(task);
-
+    private getLastIdTask(): number {
+        return Math.max.apply(Math, TestData.tasks.map(task => task.id)) + 1;
     }
+
+
+
+    getCompletedCountInCategory(category: Category): Observable<number> {
+        return of(this.searchTasks(category, null, true, null).length);
+    }
+
+
+    getUncompletedCountInCategory(category: Category): Observable<number> {
+        return of(this.searchTasks(category, null, false, null).length);
+    }
+
+
+    getTotalCountInCategory(category: Category): Observable<number> {
+        return of(this.searchTasks(category, null, null, null).length);
+    }
+
+
+    getTotalCount(): Observable<number> {
+        return of(TestData.tasks.length);
+    }
+
 
 }

@@ -1,4 +1,5 @@
-export enum OperType{
+
+export enum OperType {
     ADD,
     EDIT
 }

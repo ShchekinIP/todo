@@ -5,6 +5,7 @@
             (deleteCategory)="onDeleteCategory($event)"
             (updateCategory)="onUpdateCategory($event)"
             (addCategory)="onAddCategory($event)"
+            (searchCategory)="onSearchCategory($event)"
 
 
             [selectedCategory]="selectedCategory"
@@ -12,27 +13,30 @@
 
 
     <div class="main-panel">
+
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
 
-            <app-header
-                    [categoryName]="selectedCategory ? selectedCategory.title : 'Все'"
-                    (toggleStat)="toggleStat($event)"
-                    [showStat]="showStat">
 
-            </app-header>
+            <app-header
+                    (toggleStat)="toggleStat($event)"
+                    [categoryName]="selectedCategory ? selectedCategory.title: 'Все'"
+                    [showStat]="showStat"
+
+            ></app-header>
+
         </nav>
+
         <div class="content">
             <div class="container-fluid">
 
+
+                <!-- статистика -->
                 <app-stat
-                        [totalTasksInCategory]="totalTasksCountInCategory"
                         [completeTasksInCategory]="completedCountInCategory"
-                        [uncompletedTasksInCategory]="uncompletedCountInCategory"
-                        [showStat]="showStat">
-
-
-                </app-stat>
-
+                        [showStat]="showStat"
+                        [totalTasksInCategory]="totalTasksCountInCategory"
+                        [uncompleteTasksInCategory]="uncompletedCountInCategory"
+                ></app-stat>
 
                 <div class="row">
 
@@ -60,6 +64,9 @@
             </div>
         </div>
 
+
         <app-footer></app-footer>
+
+
     </div>
 </div>

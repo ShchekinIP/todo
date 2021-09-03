@@ -19,6 +19,7 @@ export class CategoriesComponent implements OnInit {
     selectedCategory: Category;
 
 
+
     @Output()
     selectCategory = new EventEmitter<Category>();
 
@@ -32,14 +33,23 @@ export class CategoriesComponent implements OnInit {
 
 
     @Output()
-    addCategory = new EventEmitter<string>();
+    addCategory = new EventEmitter<string>(); // передаем только название новой категории
+
+
+    @Output()
+    searchCategory = new EventEmitter<string>(); // передаем строку для поиска
+
 
 
     private indexMouseMove: number;
+    private searchCategoryTitle: string;
+
 
     constructor(
         private dataHandler: DataHandlerService,
         private dialog: MatDialog,
+
+
     ) {
     }
 
@@ -56,20 +66,20 @@ export class CategoriesComponent implements OnInit {
             return;
         }
 
-        this.selectedCategory = category; // сохраняем выбранную категорию
+        this.selectedCategory = category;
 
 
         this.selectCategory.emit(this.selectedCategory);
     }
 
 
-    private showEditIcon(index: number) {
+    private showEditIcon(index: number): void {
         this.indexMouseMove = index;
 
     }
 
 
-    private openEditDialog(category: Category) {
+    private openEditDialog(category: Category): void {
         const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
             data: [category.title, 'Редактирование категории', OperType.EDIT],
             width: '400px'
@@ -94,7 +104,7 @@ export class CategoriesComponent implements OnInit {
     }
 
 
-    private openAddDialog() {
+    private openAddDialog(): void {
 
         const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
             data: ['', 'Добавление категории', OperType.ADD],
@@ -107,5 +117,18 @@ export class CategoriesComponent implements OnInit {
             }
         });
     }
+
+
+    private search(): void {
+
+
+        if (this.searchCategoryTitle == null) {
+            return;
+        }
+
+        this.searchCategory.emit(this.searchCategoryTitle);
+
+    }
+
 
 }

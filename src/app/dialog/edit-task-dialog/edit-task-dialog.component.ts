@@ -13,6 +13,7 @@ import {OperType} from "../OperType";
   styleUrls: ['./edit-task-dialog.component.css']
 })
 
+
 export class EditTaskDialogComponent implements OnInit {
 
   private tmpCategory: Category;
@@ -51,12 +52,10 @@ export class EditTaskDialogComponent implements OnInit {
     this.tmpDate = this.task.date;
 
 
-
     this.dataHandler.getAllCategories().subscribe(items => this.categories = items);
     this.dataHandler.getAllPriorities().subscribe(items => this.priorities = items);
 
   }
-
 
   private onConfirm(): void {
 
@@ -79,7 +78,7 @@ export class EditTaskDialogComponent implements OnInit {
   }
 
 
-  private delete() {
+  private delete(): void {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '500px',
@@ -98,13 +97,13 @@ export class EditTaskDialogComponent implements OnInit {
   }
 
 
-  private complete() {
+  private complete(): void {
     this.dialogRef.close('complete');
 
   }
 
 
-  private activate() {
+  private activate(): void {
     this.dialogRef.close('activate');
   }
 

@@ -9,20 +9,20 @@
         <input
             #inputTitle
 
-            (keydown.enter)="onConfirm()" [(ngModel)]="categoryTitle"
+            (keydown.enter)="onConfirm()" [(ngModel)]="priorityTitle"
 
             matInput
-            maxlength="15"
+            maxlength="20"
 
         />
 
         <button
-                *ngIf="categoryTitle.trim().length > 0"
+                (click)="priorityTitle= ''"
 
-                aria-label="Clear"
-                class="clear-icon size25" mat-button mat-icon-button matSuffix
+                *ngIf="priorityTitle.trim().length > 0"
+                aria-label="Clear" class="clear-icon size25" mat-button mat-icon-button
 
-                (click)="categoryTitle= ''"
+                matSuffix
 
         >
             <mat-icon>clear</mat-icon>
@@ -50,14 +50,11 @@
 
     <div class="col-12 text-center">
 
-
-        <button
+        <button (click)="delete()"
                 *ngIf="canDelete()"
-                (click)="delete()"
-                class="red" mat-button>
-
+                class="red" mat-button
+        >
             Удалить
-
         </button>
 
 

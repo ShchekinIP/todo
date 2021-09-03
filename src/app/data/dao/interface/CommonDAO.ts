@@ -14,7 +14,7 @@ export interface CommonDAO<T> {
 
     update(T): Observable<T>;
 
-    // удалить значение
+
     delete(id: number): Observable<T>;
 
 

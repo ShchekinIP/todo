@@ -117,7 +117,7 @@
             </div>
 
             <div class="text-right col-6">
-                <button mat-raised-button color="primary" (click)="openAddTaskDialog()">Добавить</button>
+                <button (click)="openAddTaskDialog()" color="primary" mat-raised-button>Добавить</button>
             </div>
         </div>
     </div>
@@ -126,9 +126,9 @@
 
 
         <div class="card">
-            <div class="card-header card-header-warning">
-                <h4 class="card-title">Список задач</h4>
-            </div>
+            <!--            <div class="card-header card-header-warning">-->
+            <!--                <h4 class="card-title">Список задач</h4>-->
+            <!--            </div>-->
             <div *ngIf="tasks && tasks.length > 0" class="card-body table-responsive">
 
                 <table [dataSource]="dataSource" mat-table matSort>
@@ -265,7 +265,8 @@
 
                 </table>
 
-                <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" [pageSize]="10"
+                               showFirstLastButtons></mat-paginator>
 
 
             </div>

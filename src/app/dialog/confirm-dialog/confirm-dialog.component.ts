@@ -7,6 +7,7 @@ import {Component, Inject, OnInit} from '@angular/core';
     styleUrls: ['./confirm-dialog.component.css']
 })
 
+
 export class ConfirmDialogComponent implements OnInit {
     private dialogTitle: string;
     private message: string;
@@ -15,8 +16,8 @@ export class ConfirmDialogComponent implements OnInit {
         private dialogRef: MatDialogRef<ConfirmDialogComponent>, // для работы с текущим диалог. окном
         @Inject(MAT_DIALOG_DATA) private data: { dialogTitle: string, message: string } // данные, которые передали в диалоговое окно
     ) {
-        this.dialogTitle = data.dialogTitle;
-        this.message = data.message;
+        this.dialogTitle = data.dialogTitle; // заголовок
+        this.message = data.message; // сообщение
     }
 
     ngOnInit() {

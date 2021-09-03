@@ -3,31 +3,28 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 import {OperType} from "../OperType";
 
-
 @Component({
-    selector: 'app-edit-category-dialog',
-    templateUrl: './edit-category-dialog.component.html',
-    styleUrls: ['./edit-category-dialog.component.css']
+    selector: 'app-edit-priority-dialog',
+    templateUrl: './edit-priority-dialog.component.html',
+    styleUrls: ['./edit-priority-dialog.component.css']
 })
 
 
-export class EditCategoryDialogComponent implements OnInit {
+export class EditPriorityDialogComponent implements OnInit {
 
     private dialogTitle: string;
-    private categoryTitle: string;
+    private priorityTitle: string;
     private operType: OperType;
 
     constructor(
-        private dialogRef: MatDialogRef<EditCategoryDialogComponent>,
+        private dialogRef: MatDialogRef<EditPriorityDialogComponent>,
         @Inject(MAT_DIALOG_DATA) private data: [string, string, OperType],
         private dialog: MatDialog
     ) {
     }
 
     ngOnInit() {
-
-
-        this.categoryTitle = this.data[0];
+        this.priorityTitle = this.data[0];
         this.dialogTitle = this.data[1];
         this.operType = this.data[2];
 
@@ -35,7 +32,7 @@ export class EditCategoryDialogComponent implements OnInit {
 
 
     private onConfirm(): void {
-        this.dialogRef.close(this.categoryTitle);
+        this.dialogRef.close(this.priorityTitle);
     }
 
 
@@ -50,7 +47,7 @@ export class EditCategoryDialogComponent implements OnInit {
             maxWidth: '500px',
             data: {
                 dialogTitle: 'Подтвердите действие',
-                message: `Вы действительно хотите удалить категорию: "${this.categoryTitle}"? (сами задачи не удаляются)`
+                message: `Вы действительно хотите удалить приоритет: "${this.priorityTitle}"? (в задачи проставится '')`
             },
             autoFocus: false
         });
@@ -64,7 +61,8 @@ export class EditCategoryDialogComponent implements OnInit {
 
     }
 
+
     private canDelete(): boolean {
-        return this.operType === OperType.EDIT;
+        return this.operType == OperType.EDIT;
     }
 }

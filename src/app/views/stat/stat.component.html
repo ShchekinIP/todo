@@ -3,41 +3,41 @@
 
 
         <app-stat-card
-                class='col-lg-3 col-md-6 col-sm-6'
-                title="Завершенные задачи"
-                iconName="done"
+                [completed]="true"
                 [count1]="completeTasksInCategory"
                 [countTotal]="totalTasksInCategory"
-                [completed]="true"
+                class='col-lg-3 col-md-6 col-sm-6'
+                iconName="done"
+                title="Завершенные задачи"
         >
         </app-stat-card>
 
         <app-stat-card
-                class='col-lg-3 col-md-6 col-sm-6'
-                title="Незавершенные задачи"
-                iconName="thumb_down_alt"
-                [count1]="uncompletedTasksInCategory"
+                [count1]="uncompleteTasksInCategory"
                 [countTotal]="totalTasksInCategory"
-        >
-        </app-stat-card>
-
-
-        <app-stat-card
-                class='col-lg-3 col-md-6 col-sm-6 completed-card'
-                title="Процент завершенных задач"
-                iconName="poll"
-                [count1]="completeTasksInCategory ? (completeTasksInCategory/totalTasksInCategory | percent) : '0 %'"
-                [completed]="true"
-
-        >
-        </app-stat-card>
-
-
-        <app-stat-card
                 class='col-lg-3 col-md-6 col-sm-6'
-                title="Процент незавершенных задач"
                 iconName="thumb_down_alt"
-                [count1]="uncompletedTasksInCategory ? (uncompletedTasksInCategory/totalTasksInCategory | percent) : '0 %'">
+                title="Незавершенные задачи"
+        >
+        </app-stat-card>
+
+
+        <app-stat-card
+                [completed]="true"
+                [count1]="completeTasksInCategory ? (completeTasksInCategory/totalTasksInCategory | percent) : '0 %'"
+                class='col-lg-3 col-md-6 col-sm-6 completed-card'
+                iconName="poll"
+                title="Процент завершенных задач"
+
+        >
+        </app-stat-card>
+
+
+        <app-stat-card
+                [count1]="uncompleteTasksInCategory ? (uncompleteTasksInCategory/totalTasksInCategory | percent) : '0 %'"
+                class='col-lg-3 col-md-6 col-sm-6'
+                iconName="thumb_down_alt"
+                title="Процент незавершенных задач">
         </app-stat-card>
 
 
