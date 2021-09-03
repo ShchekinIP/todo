@@ -1,4 +1,21 @@
-<div class="wrapper ">
+<ng-sidebar-container style=" height: 100vh">
+
+    <ng-sidebar
+        [opened]="menuOpened"
+        [closeOnClickOutside] = "false"
+        [closeOnClickBackdrop] = "true"
+        [showBackdrop] = "showBackDrop"
+        [mode]="menuMode"
+        [animate]="true"
+        [position]="menuPosition"
+        [autoFocus]="false"
+        (onClosed)="onClosedMenu">
+
+        <div class="sidebar"
+             data-color="purple"
+             data-step = "1"
+             data-intro = "Фильтрация задач"
+             data-position = "right">
 
     <app-categories
             (selectCategory)="onSelectCategory($event)"
@@ -10,8 +27,10 @@
 
             [selectedCategory]="selectedCategory"
             [categories]="categories"></app-categories>
+        </div>
+    </ng-sidebar>
 
-
+<div ng-sidebar-content>
     <div class="main-panel">
 
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
@@ -21,6 +40,7 @@
                     (toggleStat)="toggleStat($event)"
                     [categoryName]="selectedCategory ? selectedCategory.title: 'Все'"
                     [showStat]="showStat"
+                    (toggleMenu)="toggleMenu()"
 
             ></app-header>
 
@@ -70,3 +90,4 @@
 
     </div>
 </div>
+</ng-sidebar-container>

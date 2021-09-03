@@ -38,10 +38,17 @@ export class AppComponent implements OnInit {
     private priorityFilter: Priority;
     private statusFilter: boolean;
 
+    private menuOpened : boolean = true;
+    private menuMode:string;
+    private menuPosition:string;
+    private showBackDrop:boolean;
+
 
     constructor(
         private dataHandler: DataHandlerService,
     ) {
+
+        this.setMenuValues();
     }
 
     ngOnInit() {
@@ -186,4 +193,18 @@ export class AppComponent implements OnInit {
         this.showStat = showStat;
     }
 
+    private toggleMenu() {
+        this.menuOpened = !this.menuOpened;
+    }
+
+    private onClosedMenu(){
+        this.menuOpened = false;
+    }
+
+    private setMenuValues(){
+        this.menuPosition = 'left';
+        this.menuOpened = true;
+        this.menuMode = 'push';
+        this.showBackDrop = false;
+    }
 }
