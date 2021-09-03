@@ -22,6 +22,8 @@ export class AppComponent implements OnInit {
     private uncompletedCountInCategory : number;
     private uncompletedTotalTasksCount : number;
 
+    private showStat = true;
+
 
     private selectedCategory: Category = null;
 
@@ -156,5 +158,9 @@ export class AppComponent implements OnInit {
             this.uncompletedCountInCategory = array[2];
             this.uncompletedTotalTasksCount = array[3]
         });
+    }
+
+    private toggleStat(showStat:boolean){
+        this.showStat = showStat;
     }
 }

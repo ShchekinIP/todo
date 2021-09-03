@@ -39,7 +39,7 @@ span.add-icon-area {
 
 #categories{
     width: 100%;
-    overflow-x: hidden; /* чтобы не было гориз. прокрутки */
+    overflow-x: hidden;
 }
 
 .nav-title {

@@ -1,0 +1,13 @@
+.header-icon{
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.settings button{
+    margin-right: 5px;
+}
+
+.navbar-brand  {
+    color: black;
+    font-weight: inherit;
+}
