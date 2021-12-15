@@ -3,23 +3,15 @@ import {Category} from '../../../model/Category';
 import {CommonDAO} from './CommonDAO';
 import {Priority} from '../../../model/Priority';
 import {Observable} from 'rxjs';
+import {TaskSearchValues} from "../search/SearchObjects";
 
 
 export interface TaskDAO extends CommonDAO<Task> {
 
 
-    search(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]>;
+    findTasks(taskSearchValues: TaskSearchValues): Observable<any>;
 
 
-    getCompletedCountInCategory(category: Category): Observable<number>;
 
-
-    getUncompletedCountInCategory(category: Category): Observable<number>;
-
-
-    getTotalCountInCategory(category: Category): Observable<number>;
-
-
-    getTotalCount(): Observable<number>;
 
 }
