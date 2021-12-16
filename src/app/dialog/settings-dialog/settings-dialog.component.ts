@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
-import {DataHandlerService} from '../../service/data-handler.service';
+
 import {Priority} from '../../model/Priority';
 
 @Component({
@@ -17,13 +17,13 @@ export class SettingsDialogComponent implements OnInit {
 
     constructor(
         private dialogRef: MatDialogRef<SettingsDialogComponent>,
-        private dataHandler: DataHandlerService
+        p
     ) {
     }
 
     ngOnInit() {
 
-        this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);
+       /* this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);*/
     }
 
 
@@ -38,17 +38,17 @@ export class SettingsDialogComponent implements OnInit {
 
 
     private onAddPriority(priority: Priority): void {
-        this.dataHandler.addPriority(priority).subscribe();
+        /*this.dataHandler.addPriority(priority).subscribe();*/
     }
 
 
     private onDeletePriority(priority: Priority): void {
-        this.dataHandler.deletePriority(priority.id).subscribe();
+        /*this.dataHandler.deletePriority(priority.id).subscribe();*/
     }
 
 
     private onUpdatePriority(priority: Priority): void {
-        this.dataHandler.updatePriority(priority).subscribe();
+       /* this.dataHandler.updatePriority(priority).subscribe();*/
     }
 
 }

@@ -1,210 +1,161 @@
 import {Component, OnInit} from '@angular/core';
-import {DataHandlerService} from "./service/data-handler.service";
 import {Task} from './model/Task';
 import {Category} from "./model/Category";
 import {Priority} from "./model/Priority";
 import {zip} from "rxjs";
+import {CategorySearchValues} from "./data/dao/search/SearchObjects";
+import {CategoryService} from "./data/dao/impl/category.service";
+
+class IntroService {
+}
+
+class DeviceDetectorService {
+}
 
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
     styles: []
 })
+
+// компонент-контейнер (Smart, Container), который управляет другими  компонентами (Dumb, Presentational)
 export class AppComponent implements OnInit {
 
-    private title = 'Todo';
-    private tasks: Task[];
-    private categories: Category[]; // все категории
-    private priorities: Priority[]; // все приоритеты
+    categories: Category[]; // все категории
+
+    // статистика
+    uncompletedCountForCategoryAll: number;
+
+    // показать/скрыть статистику
+    showStat = true;
+
+    // выбранная категория
+    selectedCategory: Category = null; // null - значит будет выбрана категория "Все"
 
 
-    private totalTasksCountInCategory: number;
-    private completedCountInCategory: number;
-    private uncompletedCountInCategory: number;
-    private uncompletedTotalTasksCount: number;
+    // параметры бокового меню с категориями
+    menuOpened: boolean; // открыть-закрыть
+    menuMode: string; // тип выдвижения (поверх, с толканием и пр.)
+    menuPosition: string; // сторона
+    showBackdrop: boolean; // показывать фоновое затемнение или нет
 
+    // тип устройства
+    isMobile: boolean;
+    isTablet: boolean;
 
-    private showStat = true;
+    // параметры поисков
+    categorySearchValues = new CategorySearchValues(); // экземпляр можно создать тут же, т.к. не загружаем из cookies
 
-
-    private selectedCategory: Category = null;
-
-
-    private searchTaskText = '';
-    private searchCategoryText = '';
-
-
-
-    private priorityFilter: Priority;
-    private statusFilter: boolean;
-
-    private menuOpened : boolean = true;
-    private menuMode:string;
-    private menuPosition:string;
-    private showBackDrop:boolean;
 
 
     constructor(
-        private dataHandler: DataHandlerService,
+        private categoryService: CategoryService,
+        private introService: IntroService, // вводная справоч. информация с выделением областей
+        private deviceService: DeviceDetectorService // для определения типа устройства (моб., десктоп, планшет)
     ) {
 
-        this.setMenuValues();
+        // определяем тип запроса
+
+
+        this.showStat = true ? !this.isMobile : false; // если моб. устройство, то по-умолчанию не показывать статистику
+
+        this.setMenuValues(); // установить настройки меню
+
+
     }
 
     ngOnInit() {
-        this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);
-        this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
+        // this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);
+        // this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
 
-        this.onSelectCategory(null);
+        // заполнить меню с категориями
+        this.fillAllCategories();
+
+        // по-умолчанию показать все задачи (будет выбрана категория Все)
+        this.selectCategory(null);
+
+        // для мобильных и планшетов - не показывать интро
+
 
     }
 
 
+    // добавление категории
+    addCategory(category: Category) {
+        this.categoryService.add(category).subscribe(result => {
 
-    private onSelectCategory(category: Category): void {
-
-        this.selectedCategory = category;
-
-        this.updateTasksAndStat();
-
+            }
+        );
     }
 
+    // удаление категории
+    deleteCategory(category: Category) {
+        this.categoryService.delete(category.id).subscribe(cat => {
 
-    private onDeleteCategory(category: Category): void {
-        this.dataHandler.deleteCategory(category.id).subscribe(cat => {
-            this.selectedCategory = null; // открываем категорию "Все"
-            this.onSelectCategory(null);
+        });
+    }
+
+    // обновлении категории
+    updateCategory(category: Category) {
+        this.categoryService.update(category).subscribe(() => {
+
         });
     }
 
 
-    private onUpdateCategory(category: Category): void {
-        this.dataHandler.updateCategory(category).subscribe(() => {
-            this.onSearchCategory(this.searchCategoryText);
+    // заполняет категории и кол-во невыполненных задач по каждой из них (нужно для отображения категорий)
+    fillAllCategories() {
+
+        this.categoryService.findAll().subscribe(result => {
+            this.categories = result;
+        });
+
+
+    }
+
+    // поиск категории
+    searchCategory(categorySearchValues: CategorySearchValues) {
+        this.categoryService.findCategories(categorySearchValues).subscribe(result => {
+            this.categories = result;
         });
     }
 
 
-    private onUpdateTask(task: Task): void {
+    // изменение категории
+    selectCategory(category: Category): void {
 
-        this.dataHandler.updateTask(task).subscribe(cat => {
-            this.updateTasksAndStat();
-        });
 
     }
 
 
-    private onDeleteTask(task: Task): void {
-
-        this.dataHandler.deleteTask(task.id).subscribe(cat => {
-            this.updateTasksAndStat();
-        });
-    }
-
-
-
-    private onSearchTasks(searchString: string): void {
-        this.searchTaskText = searchString;
-        this.updateTasks();
-    }
-
-
-    private onFilterTasksByStatus(status: boolean): void {
-        this.statusFilter = status;
-        this.updateTasks();
-    }
-
-
-    private onFilterTasksByPriority(priority: Priority): void {
-        this.priorityFilter = priority;
-        this.updateTasks();
-    }
-
-    private updateTasks(): void {
-        this.dataHandler.searchTasks(
-            this.selectedCategory,
-            this.searchTaskText,
-            this.statusFilter,
-            this.priorityFilter
-        ).subscribe((tasks: Task[]) => {
-            this.tasks = tasks;
-        });
-    }
-
-
-
-    private onAddTask(task: Task): void {
-
-        this.dataHandler.addTask(task).subscribe(result => {
-
-            this.updateTasksAndStat();
-
-        });
-
-    }
-
-
-    private onAddCategory(title: string): void {
-        this.dataHandler.addCategory(title).subscribe(() => this.updateCategories());
-    }
-
-    private updateCategories(): void {
-        this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
-    }
-
-
-    private onSearchCategory(title: string): void {
-
-        this.searchCategoryText = title;
-
-        this.dataHandler.searchCategories(title).subscribe(categories => {
-            this.categories = categories;
-        });
-    }
-
-
-    private updateTasksAndStat(): void {
-
-        this.updateTasks();
-
-
-        this.updateStat();
-
-    }
-
-
-    private updateStat(): void {
-        zip(
-            this.dataHandler.getTotalCountInCategory(this.selectedCategory),
-            this.dataHandler.getCompletedCountInCategory(this.selectedCategory),
-            this.dataHandler.getUncompletedCountInCategory(this.selectedCategory),
-            this.dataHandler.getUncompletedTotalCount())
-
-            .subscribe(array => {
-                this.totalTasksCountInCategory = array[0];
-                this.completedCountInCategory = array[1];
-                this.uncompletedCountInCategory = array[2];
-                this.uncompletedTotalTasksCount = array[3];
-            });
-    }
-
-
-    private toggleStat(showStat: boolean): void {
-        this.showStat = showStat;
-    }
-
-    private toggleMenu() {
-        this.menuOpened = !this.menuOpened;
-    }
-
-    private onClosedMenu(){
+    // если закрыли меню любым способом - ставим значение false
+    onClosedMenu() {
         this.menuOpened = false;
     }
 
-    private setMenuValues(){
-        this.menuPosition = 'left';
-        this.menuOpened = true;
-        this.menuMode = 'push';
-        this.showBackDrop = false;
+    // параметры меню
+    setMenuValues() {
+
+        this.menuPosition = 'left'; // меню слева
+
+        // настройки бокового меню для моб. и десктоп вариантов
+        if (this.isMobile) {
+            this.menuOpened = false; // на моб. версии по-умолчанию меню будет закрыто
+            this.menuMode = 'over'; // поверх всего контента
+            this.showBackdrop = true; // показывать темный фон или нет (нужно для мобильной версии)
+        } else {
+            this.menuOpened = true; // НЕ в моб. версии  по-умолчанию меню будет открыто (т.к. хватает места)
+            this.menuMode = 'push'; // будет "толкать" основной контент, а не закрывать его
+            this.showBackdrop = false; // показывать темный фон или нет
+        }
+
+
     }
+
+    // показать-скрыть меню
+    toggleMenu() {
+        this.menuOpened = !this.menuOpened;
+    }
+
+
 }

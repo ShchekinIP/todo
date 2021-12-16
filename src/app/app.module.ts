@@ -76,7 +76,9 @@ registerLocaleData(localeRu);
         SidebarModule,
         HttpClientModule
     ],
-    providers: [],
+    providers: [
+
+    ],
     entryComponents: [
         EditTaskDialogComponent,
         ConfirmDialogComponent,

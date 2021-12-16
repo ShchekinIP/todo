@@ -32,7 +32,7 @@ export class TaskService implements TaskDAO{
   }
 
   findTasks(taskSearchValues: TaskSearchValues): Observable<any> {
-    return this.httpClient.post<Priority[]>(this.url + '/search', taskSearchValues)
+    return this.httpClient.post<Task[]>(this.url + '/search', taskSearchValues)
   }
 
   update(task: Task): Observable<Task> {
